@@ -9,10 +9,11 @@ import sys
 
 class Main:
     # Função principal
+    @staticmethod
     def main():
         app = AppLogic(sys.argv)
         app.run()
 
-    # Chama a função "main" ao iniciar
-    if __name__ == "__main__":
-        main()
+# Chama a função "main" ao iniciar
+if __name__ == "__main__":
+    Main.main()
