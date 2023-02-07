@@ -5,6 +5,7 @@
 
 from csv_data.CsvReader import CsvReader
 from interpreter.Tape import Tape
+from interpreter.Token import Token
 import os
 
 class AppLogic:
@@ -48,6 +49,14 @@ class AppLogic:
         tape = Tape(table)
         inputTape = tape.generateTape(scriptPath)
 
-        # Exibe a fita
+        # Gera a fita de tokens
+        token = Token()
+        tokenTape = token.replaceNumbersWithTokens(inputTape)
+
+        # Exibe a fita de entrada
         print("*** FITA ***")
         print(inputTape)
+
+        # Exibe a fita de tokens
+        print("\n*** TOKENS ***")
+        print(tokenTape)
