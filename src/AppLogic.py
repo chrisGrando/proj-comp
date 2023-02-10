@@ -29,29 +29,38 @@ class AppLogic:
 
     # Executa o programa
     def run(self):
+        # Inicializa leitor de planilhas CSV
+        cr = CsvReader()
+
         # Checa se os parâmetros de linha de comando estão corretos
-        if (len(self.args) != 3):
+        if (len(self.args) != 4):
             print("Uso incorreto de parâmetros.\nSaindo...")
             exit(0)
 
         # Caminho para o arquivo da tabela de AFD
-        tablePath = self.getAbsPathFile(self.args[1])
+        dfaTablePath = self.getAbsPathFile(self.args[1])
 
         # Caminho para o arquivo do script
         scriptPath = self.getAbsPathFile(self.args[2])
 
-        # Lê o arquivo do Autômato Finito Determinístico
-        cr = CsvReader()
-        cr.read(tablePath)
-        table = cr.getTableData()
+        # Caminho para o arquivo da tabela de SLR
+        slrTablePath = self.getAbsPathFile(self.args[3])
+
+        # Lê o arquivo do Autômato Finito Determinístico (AFD)
+        cr.read(dfaTablePath)
+        dfaTable = cr.getTableData()
 
         # Gera a fita de entrada
-        tape = Tape(table)
+        tape = Tape(dfaTable)
         inputTape = tape.generateTape(scriptPath)
 
         # Gera a fita de tokens
         token = Token()
         tokenTape = token.replaceNumbersWithTokens(inputTape)
+
+        # Lê o arquivo do Reconhecimento Sintático (SLR)
+        cr.read(slrTablePath)
+        slrTable = cr.getTableData()
 
         # Exibe a fita de entrada
         print("*** FITA ***")
@@ -60,3 +69,8 @@ class AppLogic:
         # Exibe a fita de tokens
         print("\n*** TOKENS ***")
         print(tokenTape)
+
+        # Exibe tabela SLR
+        print("\n*** SLR ***")
+        for row in slrTable:
+            print(row)

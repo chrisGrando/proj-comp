@@ -13,6 +13,9 @@ class CsvReader:
     # Abre e lê o arquivo CSV
     def read(self, file):
         with open(file, mode = 'r') as csvFile:
+            # Reseta array de conteúdo lido
+            self.contents.clear()
+
             # Lê o arquivo
             csvTable = csv.reader(csvFile, delimiter = ',')
 

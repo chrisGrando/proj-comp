@@ -6,7 +6,7 @@
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/src/Main.py",
-            "args": ["data/afd.csv", "data/script.cdc"],
+            "args": ["data/afd.csv", "data/script.cdc", "data/slr.csv"],
             "console": "integratedTerminal",
             "justMyCode": true
         }
