@@ -4,6 +4,7 @@
 """
 
 from csv_data.CsvReader import CsvReader
+from interpreter.SLR import SLR
 from interpreter.Tape import Tape
 from interpreter.Token import Token
 import os
@@ -54,23 +55,23 @@ class AppLogic:
         tape = Tape(dfaTable)
         inputTape = tape.generateTape(scriptPath)
 
-        # Gera a fita de tokens
-        token = Token()
-        tokenTape = token.replaceNumbersWithTokens(inputTape)
-
-        # Lê o arquivo do Reconhecimento Sintático (SLR)
-        cr.read(slrTablePath)
-        slrTable = cr.getTableData()
-
         # Exibe a fita de entrada
         print("*** FITA ***")
         print(inputTape)
+
+        # Gera a fita de tokens
+        token = Token()
+        tokenTape = token.replaceNumbersWithTokens(inputTape)
 
         # Exibe a fita de tokens
         print("\n*** TOKENS ***")
         print(tokenTape)
 
-        # Exibe tabela SLR
+        # Lê o arquivo do Reconhecimento Sintático (SLR)
+        cr.read(slrTablePath)
+        slrTable = cr.getTableData()
+
+        # Executa o Reconhecimento Sintático (SLR)
         print("\n*** SLR ***")
-        for row in slrTable:
-            print(row)
+        slr = SLR(tokenTape, slrTable)
+        slr.runSyntaxRecognition()
